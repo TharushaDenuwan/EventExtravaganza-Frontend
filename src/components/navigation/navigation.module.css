@@ -105,6 +105,7 @@ body, html {
     overflow-x: hidden;
 }
 
+
 .mainbox {
     margin-top: 90px; /* Pushes all content below the navbar */
 }
@@ -269,4 +270,53 @@ body, html {
     .dropdown li {
         width: 100%;
     }
+
 }
+
+/* navigation.module.css */
+
+/* Basic styling for the list items */
+.navList li {
+    position: relative;
+    padding-bottom: 5px; /* Optional space for the underline */
+    cursor: pointer; /* Add a pointer cursor on hover */
+    transition: color 0.3s ease; /* Optional smooth color transition */
+  }
+  
+  /* Styling for active state */
+  .navList .active {
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  /* The underline effect for both hover and active states */
+  .navList li::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #007bff; /* Set the underline color */
+    transform: scaleX(0); /* Initially no underline */
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out; /* Smooth transition */
+  }
+  
+  /* Underline effect when hovering */
+  .navList li:hover::after {
+    transform: scaleX(1); /* Underline appears */
+    transform-origin: bottom left;
+  }
+  
+  /* Underline effect when the item is active */
+  .navList li.active::after {
+    transform: scaleX(1); /* Keep the underline visible */
+    transform-origin: bottom left;
+  }
+  
+  /* Smooth color change on hover (Optional for additional effect) */
+  .navList li:hover {
+    color: #007bff; /* Change text color on hover */
+  }
+  

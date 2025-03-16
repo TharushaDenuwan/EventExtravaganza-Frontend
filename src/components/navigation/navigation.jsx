@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './navigation.module.css';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation(); // Access current route location
+
+  // Function to check if the current path matches
+  const isActive = (path) => location.pathname === path ? styles.active : "";
 
   return (
     <div className={styles.nav}>
@@ -14,18 +18,18 @@ export default function Navigation() {
             ☰
           </button>
           <ul className={`${styles.navList} ${isOpen ? styles.open : ""}`}>
-            <li onClick={() => navigate('/Home')} className={styles.li1}>Home</li>
+            <li onClick={() => navigate('/Home')} className={`${styles.li1} ${isActive('/Home')}`}>Home</li>
             <li className={styles.list2}>
               Services
               <div className={styles.dropdown}>
-                <li onClick={() => navigate('/budget_filtering')}>Budget Filtering</li>
-                <li onClick={() => navigate('/LocationBase_Filtering')}>Location Filtering</li>
-                <li onClick={()=> navigate('/Invitation')}>Send Invitations</li>
-                <li>Chat Bot</li>
+                <li onClick={() => navigate('/budget_filtering')} className={isActive('/budget_filtering')}>Budget Filtering</li>
+                <li onClick={() => navigate('/LocationBase_Filtering')} className={isActive('/LocationBase_Filtering')}>Location Filtering</li>
+                <li onClick={() => navigate('/Invitation')} className={isActive('/Invitation')}>Send Invitations</li>
+                <li className={isActive('/ChatBot')}>Chat Bot</li>
               </div>
             </li>
-            <li className={styles.li1}>Inbox</li>
-            <li className={styles.li1} onClick={() => navigate('/profile')}>Profile</li>
+            <li className={`${styles.li1} ${isActive('/Inbox')}`} onClick={() => navigate('/Inbox')}>Inbox</li>
+            <li className={`${styles.li1} ${isActive('/Organizer_Profile')}`} onClick={() => navigate('/Organizer_Profile')}>Profile</li>
           </ul>
         </nav>
       </div>
