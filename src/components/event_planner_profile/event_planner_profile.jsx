@@ -70,11 +70,12 @@ export default function EventPlannerProfile() {
         <div className={styles.profileCard}>
           <div className={styles.profileHeader}>
             <div className={styles.profileImageContainer}>
-              <img
+              {/* <img
                 src={plannerData.profilePicture || "/placeholder.svg"}
                 alt={plannerData.name}
                 className={styles.profileImage}
-              />
+              /> */}
+              {plannerData.name.charAt(0)}
             </div>
             <h1 className={styles.profileName}>{plannerData.name}</h1>
 
