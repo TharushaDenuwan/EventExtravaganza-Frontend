@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 import axios from "axios";
-import Navigation from "../../event_planner_site/navigation/navigation";
+import Navigation from "../navigation/navigation";
 import styles from "../../event_planner_site/inbox/Chat.module.css"; // Import the CSS Module file
 
 const socket = io("http://localhost:5000");
