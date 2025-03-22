@@ -124,7 +124,7 @@ export default function EventInvitation() {
   const sendEmail = async (image) => {
     const serviceID = 'service_hh0a5cm';
     const templateID = 'template_2cdp6y7';
-    const userID = '1SLJDJFAIftTWfyS1';
+    const userID = '4Whebqy2IefyJuPHa';
   
     const inviteesArray = eventDetails.invitees.split(',').map(email => email.trim());
   
