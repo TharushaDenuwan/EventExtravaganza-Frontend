@@ -51,6 +51,7 @@ export default function Chatbot() {
       if (response.data?.reply) {
           const botMessage = { role: "bot", content: response.data.reply };
           setMessages((prevMessages) => [...prevMessages, botMessage]);
+          
       } else {
           setError('Invalid response from the chatbot.');
       }
