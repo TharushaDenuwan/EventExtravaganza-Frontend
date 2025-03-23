@@ -62,6 +62,7 @@ export default function EventPlannerSignin() {
         speciality: plannerData.Speciality,
         budget: plannerData.Budget,
         experience: plannerData.Experience,
+        Weekly_Availability: plannerData.Weekly_Availability,
       }));
 
       // Step 4: Redirect to the profile page
