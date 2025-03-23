@@ -125,7 +125,7 @@ export default function EventPlannerSignin() {
 
         <p className={styles.p2}>
           Don't have an account?
-          <span className={styles.span} onClick={() => navigate("/planner_signup")}>
+          <span className={styles.span} onClick={() => navigate("/planner_login")}>
             Sign up
           </span>
         </p>
