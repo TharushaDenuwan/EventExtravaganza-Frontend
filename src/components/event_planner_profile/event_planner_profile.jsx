@@ -3,12 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./event_planner_profile.module.css";
 import Navigation from "../../event_planner_site/navigation/navigation";
 import Footer from "../../event_planner_site/footer/planner_footer";
+import WeeklyAvailability from "../weekly_availability/weekly_availability";
 
 export default function EventPlannerProfile() {
   const navigate = useNavigate();
   const [checklists, setChecklists] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedChecklist, setSelectedChecklist] = useState(null);
+  const [availabilityData, setAvailabilityData] = useState(null);
 
   const plannerData = JSON.parse(localStorage.getItem("planner")) || {
     name: "Udani Lokuhetti",
@@ -21,6 +23,15 @@ export default function EventPlannerProfile() {
     budget: "200000",
   };
 
+
+   
+   
+  
+    const handleSaveAvailability = (updatedData) => {
+      setAvailabilityData(updatedData);
+      console.log("Final Availability Data:", updatedData);
+    };
+
   useEffect(() => {
     const fetchChecklists = async () => {
       try {
@@ -31,6 +42,7 @@ export default function EventPlannerProfile() {
           throw new Error("Failed to fetch checklists");
         }
         const checklistsData = await response.json();
+
         setChecklists(checklistsData);
       } catch (error) {
         console.error("Error fetching checklists:", error);
@@ -217,6 +229,20 @@ export default function EventPlannerProfile() {
                 </div>
               </div>
             </div>
+
+
+           
+            <div>
+              
+              <h1>Manage Weekly Availability</h1>
+              <WeeklyAvailability onSave={handleSaveAvailability} displayOnly={true}  availabilityData={availabilityData}/>
+              
+            </div>
+
+
+
+
+
           </div>
         </div>
       </div>

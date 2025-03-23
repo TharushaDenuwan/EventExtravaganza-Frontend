@@ -4,6 +4,7 @@ import styles from '../event_planner_login/event_planner_login.module.css';
 
 import { useNavigate } from "react-router-dom";
 import GoogleMapEditableMakerComponent from '../../../map/google_map_editable_maker_component';
+import WeeklyAvailability from "../../weekly_availability/weekly_availability";
 
 export default function EventPlannerLogin() {
   const [latitude, setLatitude] = useState([]); // To store the coordinates
@@ -23,6 +24,14 @@ export default function EventPlannerLogin() {
     Budget: '',
     Experience: '',
   });
+  
+  const [availabilityData, setAvailabilityData] = useState(null);
+
+  const handleSaveAvailability = (updatedData) => {
+    setAvailabilityData(updatedData);
+    console.log("Final Availability Data:", updatedData);
+  };
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -43,10 +52,11 @@ export default function EventPlannerLogin() {
     const dataToSend = {
       FullName: formData.FullName,
       Email: formData.Email,
-      ContactNumber: formData.ContactNumber,
+      ContactNumber: "0716335703",
       Password: formData.Password,
       Address: formData.Address,
       City: formData.City,
+      Weekly_Availability:availabilityData,
       Gender: formData.Gender,
       Speciality: formData.Speciality,
       Budget: formData.Budget,
@@ -196,7 +206,23 @@ export default function EventPlannerLogin() {
                 <h1>Select your location</h1>
                 <GoogleMapEditableMakerComponent onCityUpdate={handleCityUpdate} />
               </div>
+
+              <div>
+              
+          <h1>Manage Weekly Availability</h1>
+          <WeeklyAvailability onSave={handleSaveAvailability} />
+
+          {availabilityData && (
+            <div>
+              <h3>Updated Availability:</h3>
+              <pre>{JSON.stringify(availabilityData, null, 2)}</pre>
+            </div>
+          )}
+          
+        </div>
           </div>
+          
+
           
 
           <div className={styles.box2}>
