@@ -17,7 +17,7 @@ export default function Footer() {
             </div>
             <div className={styles.contactItem}>
               <Mail size={16} />
-              <span>contact@extravaganza.com</span>
+              <span>extravaganzaevent14@gmail.com</span>
             </div>
             <div className={styles.contactItem}>
               <MapPin size={16} />
@@ -34,7 +34,7 @@ export default function Footer() {
               <a href="/LocationBase_Filtering">Search Venues</a>
             </div>
             <div className={styles.linksColumn}>
-              <a href="#chatbot">Chatbot</a>
+              <a href="/Chatbot">Chatbot</a>
               <a href="/Invitation">Invitation Management</a>
               {/* <a href="#checklist-management">Checklist Management</a> */}
             </div>
@@ -43,7 +43,7 @@ export default function Footer() {
         <div className={styles.footerSection}>
           <h3>Connect With Us</h3>
           <div className={styles.socialLinks}>
-            <a href="#" className={styles.socialLink} aria-label="Instagram">
+            <a href="https://www.instagram.com/event_extravaganza?igsh=cmRuOXpxaXZyMHM4" className={styles.socialLink} aria-label="Instagram">
               <Instagram />
             </a>
             <a 
@@ -55,7 +55,7 @@ export default function Footer() {
             >
               <Linkedin />
             </a>
-            <a href="#" className={styles.socialLink} aria-label="WhatsApp">
+            <a href="mailto:extravaganzaevent14@gmail.com" className={styles.socialLink} aria-label="WhatsApp">
               <MessageCircle />
             </a>
           </div>
