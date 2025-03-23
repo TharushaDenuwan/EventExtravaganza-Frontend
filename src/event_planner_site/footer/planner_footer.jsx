@@ -47,10 +47,6 @@ export default function Footer() {
                 <span>extravaganzaevent14@gmail.com</span>
               </li>
               <li>
-                <Phone size={16} />
-                <span>+1 (555) 123-4567</span>
-              </li>
-              <li>
                 <MapPin size={16} />
                 <span>Colombo, Sri Lanka</span>
               </li>
