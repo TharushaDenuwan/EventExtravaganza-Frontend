@@ -12,16 +12,12 @@ export default function Footer() {
           <p>Extravaganza helps you create unforgettable events with professional planning services and seamless coordination.</p>
           <div className={styles.contactInfo}>
             <div className={styles.contactItem}>
-              <Phone size={16} />
-              <span>+1 (555) 123-4567</span>
-            </div>
-            <div className={styles.contactItem}>
               <Mail size={16} />
-              <span>contact@extravaganza.com</span>
+              <span>extravaganzaevent14@gmail.com</span>
             </div>
             <div className={styles.contactItem}>
               <MapPin size={16} />
-              <span>123 Event Street, Planning City</span>
+              <span>Colombo, Sri Lanka</span>
             </div>
           </div>
         </div>
@@ -43,7 +39,7 @@ export default function Footer() {
         <div className={styles.footerSection}>
           <h3>Connect With Us</h3>
           <div className={styles.socialLinks}>
-            <a href="#" className={styles.socialLink} aria-label="Instagram">
+            <a href="https://www.instagram.com/event_extravaganza/?igsh=cmRuOXpxaXZyMHM4#" className={styles.socialLink} aria-label="Instagram">
               <Instagram />
             </a>
             <a 
@@ -54,9 +50,6 @@ export default function Footer() {
               aria-label="LinkedIn"
             >
               <Linkedin />
-            </a>
-            <a href="#" className={styles.socialLink} aria-label="WhatsApp">
-              <MessageCircle />
             </a>
           </div>
           <div className={styles.newsletter}>
