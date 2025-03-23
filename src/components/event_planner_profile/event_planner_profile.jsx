@@ -10,7 +10,6 @@ export default function EventPlannerProfile() {
   const [checklists, setChecklists] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedChecklist, setSelectedChecklist] = useState(null);
-  const [availabilityData, setAvailabilityData] = useState(null);
 
   const plannerData = JSON.parse(localStorage.getItem("planner")) || {
     name: "Udani Lokuhetti",
@@ -21,16 +20,16 @@ export default function EventPlannerProfile() {
     address: "123 Event Street, Colombo 07",
     speciality: "Wedding",
     budget: "200000",
+    Weekly_Availability: {
+      Monday: [],
+      Tuesday: [],
+      Wednesday: [],
+      Thursday: [],
+      Friday: [],
+      Saturday: [],
+      Sunday: []
+    }
   };
-
-
-   
-   
-  
-    const handleSaveAvailability = (updatedData) => {
-      setAvailabilityData(updatedData);
-      console.log("Final Availability Data:", updatedData);
-    };
 
   useEffect(() => {
     const fetchChecklists = async () => {
@@ -82,11 +81,6 @@ export default function EventPlannerProfile() {
         <div className={styles.profileCard}>
           <div className={styles.profileHeader}>
             <div className={styles.profileImageContainer}>
-              {/* <img
-                src={plannerData.profilePicture || "/placeholder.svg"}
-                alt={plannerData.name}
-                className={styles.profileImage}
-              /> */}
               {plannerData.name.charAt(0)}
             </div>
             <h1 className={styles.profileName}>{plannerData.name}</h1>
@@ -163,8 +157,6 @@ export default function EventPlannerProfile() {
                               <option value="Completed">Completed</option>
                             </select>
                           </td>
-                          <td>
-                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -192,8 +184,8 @@ export default function EventPlannerProfile() {
                   <p>{plannerData.email}</p>
                 </div>
                 <div className={styles.infoItem}>
-                  <label>Phone:</label>
-                  <p>{plannerData.contactNumber}</p>
+                  <label>Speciality:</label>
+                  <p>{plannerData.speciality}</p>
                 </div>
                 <div className={styles.infoItem}>
                   <label>City:</label>
@@ -210,8 +202,8 @@ export default function EventPlannerProfile() {
               <h2>Professional Details</h2>
               <div className={styles.infoGrid}>
                 <div className={styles.infoItem}>
-                  <label>Speciality:</label>
-                  <p>{plannerData.speciality}</p>
+                  <label>Experience:</label>
+                  <p>{plannerData.experience}</p>
                 </div>
                 <div className={styles.infoItem}>
                   <label>Budget Range:</label>
@@ -230,19 +222,29 @@ export default function EventPlannerProfile() {
               </div>
             </div>
 
-
-           
             <div>
-              
-              <h1>Manage Weekly Availability</h1>
-              <WeeklyAvailability onSave={handleSaveAvailability} displayOnly={true}  availabilityData={availabilityData}/>
-              
+              <h1>Weekly Availability</h1>
+              <table className={styles.taskTable}>
+                <thead>
+                  <tr>
+                    <th>Day</th>
+                    <th>Available Times</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.entries(plannerData.Weekly_Availability || {}).map(([day, times]) => (
+                    <tr key={day}>
+                      <td>{day}</td>
+                      <td>
+                        {times && times.length > 0 
+                          ? times.join(', ')
+                          : 'No availability set'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-
-
-
-
-
           </div>
         </div>
       </div>
