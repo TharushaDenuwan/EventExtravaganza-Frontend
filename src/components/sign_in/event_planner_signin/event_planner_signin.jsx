@@ -62,6 +62,7 @@ export default function EventPlannerSignin() {
         speciality: plannerData.Speciality,
         budget: plannerData.Budget,
         experience: plannerData.Experience,
+        Weekly_Availability: plannerData.Weekly_Availability,
       }));
 
       // Step 4: Redirect to the profile page
@@ -124,7 +125,7 @@ export default function EventPlannerSignin() {
 
         <p className={styles.p2}>
           Don't have an account?
-          <span className={styles.span} onClick={() => navigate("/planner_signup")}>
+          <span className={styles.span} onClick={() => navigate("/planner_login")}>
             Sign up
           </span>
         </p>

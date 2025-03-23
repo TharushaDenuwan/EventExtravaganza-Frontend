@@ -1,13 +1,12 @@
-
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from '../event_planner_login/event_planner_login.module.css';
-
 import { useNavigate } from "react-router-dom";
 import GoogleMapEditableMakerComponent from '../../../map/google_map_editable_maker_component';
+import WeeklyAvailability from "../../weekly_availability/weekly_availability";
 
 export default function EventPlannerLogin() {
-  const [latitude, setLatitude] = useState([]); // To store the coordinates
-  const [longitude, setLongitude] = useState(null); // To store error message
+  const [latitude, setLatitude] = useState([]);
+  const [longitude, setLongitude] = useState(null);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -23,6 +22,21 @@ export default function EventPlannerLogin() {
     Budget: '',
     Experience: '',
   });
+  
+  const [availabilityData, setAvailabilityData] = useState({
+    Monday: [],
+    Tuesday: [],
+    Wednesday: [],
+    Thursday: [],
+    Friday: [],
+    Saturday: [],
+    Sunday: []
+  });
+
+  const handleSaveAvailability = (updatedData) => {
+    setAvailabilityData(updatedData);
+    console.log("Final Availability Data:", updatedData);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -43,10 +57,11 @@ export default function EventPlannerLogin() {
     const dataToSend = {
       FullName: formData.FullName,
       Email: formData.Email,
-      ContactNumber: formData.ContactNumber,
+      ContactNumber: "0716335703",
       Password: formData.Password,
       Address: formData.Address,
       City: formData.City,
+      Weekly_Availability: availabilityData,
       Gender: formData.Gender,
       Speciality: formData.Speciality,
       Budget: formData.Budget,
@@ -80,7 +95,9 @@ export default function EventPlannerLogin() {
           gender: formData.Gender,
           speciality: formData.Speciality,
           budget: formData.Budget,
-          experience: formData.Experience
+          experience: formData.Experience,
+          Weekly_Availability: availabilityData
+         
         }));
 
         navigate('/Home_PAGE');
@@ -93,28 +110,22 @@ export default function EventPlannerLogin() {
     }
   };
 
-      // Function to handle city name update from child component
-      const handleCityUpdate = (cityName, latitude, longitude) => {
-        // Update the city state
-        setFormData({
-          ...formData,
-          ['City']: cityName,
-        });
-
-        setLatitude(latitude);
-        setLongitude(longitude);
-
-      };
+  const handleCityUpdate = (cityName, lat, long) => {
+    setFormData({
+      ...formData,
+      ['City']: cityName,
+    });
+    setLatitude(lat);
+    setLongitude(long);
+  };
 
   return (
     <div className={styles.main}>
-      
-
       <div className={styles.container}>
         <form className={styles.container2} onSubmit={handleSubmit}>
           <div className={styles.box1}>
-          <h1 className={styles.h1}>Create Event Planner Account</h1>
-          <p className={styles.p1}>Provide correct information to setup your account</p>
+            <h1 className={styles.h1}>Create Event Planner Account</h1>
+            <p className={styles.p1}>Provide correct information to setup your account</p>
 
             <label className={styles.l1} htmlFor="FullName">Full Name</label> <br />
             <input
@@ -192,12 +203,19 @@ export default function EventPlannerLogin() {
               required
             />
 
-            <div className={styles.l1} >
-                <h1>Select your location</h1>
-                <GoogleMapEditableMakerComponent onCityUpdate={handleCityUpdate} />
-              </div>
+            <div className={styles.l1}>
+              <h1>Select your location</h1>
+              <GoogleMapEditableMakerComponent onCityUpdate={handleCityUpdate} />
+            </div>
+
+            <div>
+              <h1>Set Weekly Availability</h1>
+              <WeeklyAvailability 
+                onSave={handleSaveAvailability}
+                initialData={availabilityData}
+              />
+            </div>
           </div>
-          
 
           <div className={styles.box2}>
             <label className={styles.l1} htmlFor="Gender">Gender</label> <br />
@@ -255,7 +273,7 @@ export default function EventPlannerLogin() {
 
             <button className={styles.b1} type="submit">Sign up</button>
             <p className={styles.p2}>
-              Already have an account? <span onClick={()=> navigate('/planner_signin')} className={styles.span}>Login</span>
+              Already have an account? <span onClick={() => navigate('/planner_signin')} className={styles.span}>Login</span>
             </p>
           </div>
         </form>

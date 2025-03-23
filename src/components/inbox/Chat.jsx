@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 import axios from "axios";
 import Navigation from "../navigation/navigation";
-import styles from "./chat.module.css";
+import styles from "./Chat.module.css";
 import { MessageCircle, Send, Paperclip, User } from 'lucide-react';
 import Footer from "../footer/footer";
 

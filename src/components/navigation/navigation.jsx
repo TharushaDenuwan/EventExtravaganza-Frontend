@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Home, Package, Send, MessageCircle, Inbox, User, ChevronDown } from 'lucide-react';
-import styles from './Navigation.module.css';
+import styles from './navigation.module.css';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
