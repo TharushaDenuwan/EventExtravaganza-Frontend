@@ -138,3 +138,14 @@
       padding: 0.8rem;
     }
   }
+
+  .errorText {
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .inputError {
+    border-color: #dc2626 !important;
+  }
