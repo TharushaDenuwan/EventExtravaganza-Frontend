@@ -9,7 +9,7 @@ import styles from './invitation_send.module.css';
 import Footer from '../components/footer/footer';
 
 
-emailjs.init("1SLJDJFAIftTWfyS1");
+emailjs.init("4Whebqy2IefyJuPHa");
 
 const compressImage = (base64String, maxWidth = 800) => {
   return new Promise((resolve) => {
@@ -122,9 +122,9 @@ export default function EventInvitation() {
   };
 
   const sendEmail = async (image) => {
-    const serviceID = 'service_44creeq';
-    const templateID = 'template_id6fdig';
-    const userID = '1SLJDJFAIftTWfyS1';
+    const serviceID = 'service_hh0a5cm';
+    const templateID = 'template_2cdp6y7';
+    const userID = '4Whebqy2IefyJuPHa';
   
     const inviteesArray = eventDetails.invitees.split(',').map(email => email.trim());
   

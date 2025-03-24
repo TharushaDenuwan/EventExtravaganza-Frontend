@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 import axios from "axios";
 import Navigation from "../../event_planner_site/navigation/navigation";
-import styles from './Chat.module.css'; // Import the CSS Module file
+import styles from "./Chat.module.css";
+import { MessageCircle, Send, Paperclip, User } from 'lucide-react';
+import Footer from "../footer/planner_footer";
 
 const socket = io("http://localhost:5000");
 
@@ -18,7 +20,6 @@ const Chat = () => {
     const getSenderEmail = () => {
       const planner = localStorage.getItem("planner");
       const email = JSON.parse(planner)?.email || "";
-      console.log("Sender email:", email); // Log sender email
       return email;
     };
     setSender(getSenderEmail());
@@ -35,23 +36,25 @@ const Chat = () => {
       if (selectedClient && newMessage.sender === selectedClient.email) {
         setMessages((prev) => [...prev, newMessage]);
       }
+
+      if (!clients.some(client => client.email === newMessage.sender)) {
+        setClients(prevClients => [...prevClients, {
+          email: newMessage.sender,
+          name: newMessage.sender.split("@")[0]
+        }]);
+      }
     });
 
     return () => socket.off("newMessage");
-  }, [selectedClient]);
+  }, [selectedClient, clients]);
 
   const fetchClients = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/chat/clients?sender=${sender}`
-      );
-      console.log("Fetched clients:", response.data);
-  
+      const response = await axios.get(`http://localhost:5000/api/chat/clients?sender=${sender}`);
       const clientData = response.data.map(email => ({
         email,
-        name: email.split('@')[0] // Default name using the part before the @
+        name: email.split("@")[0]
       }));
-  
       setClients(clientData);
     } catch (error) {
       console.error("Error fetching clients:", error);
@@ -70,22 +73,43 @@ const Chat = () => {
     }
   };
 
-  const sendMessage = async () => {
-    if (!message.trim() || !selectedClient) return;
-
+  const sendMessage = async (content, type = "text") => {
+    if (!content.trim() || !selectedClient) return;
+  
     const messageData = {
       sender,
       recipient: selectedClient.email,
-      content: message,
-      type: "text",
+      content,
+      type,
+      fileUrl: type === "file" ? content : null,
     };
-
+  
     try {
       await axios.post("http://localhost:5000/api/chat/sendMessage", messageData);
       socket.emit("sendMessage", messageData);
-      setMessage("");
+      if (type === "text") setMessage("");
     } catch (error) {
       console.error("Error sending message:", error);
+    }
+  };
+
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await axios.post("http://localhost:5000/api/chat/upload", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      if (response.data.file.fileUrl) {
+        sendMessage(response.data.file.fileUrl, "file");
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
     }
   };
 
@@ -95,36 +119,45 @@ const Chat = () => {
       return;
     }
 
-    // Check if chat already exists
     const existingChat = clients.find(client => client.email === newEmail);
     if (existingChat) {
       setSelectedClient(existingChat);
       fetchMessages(existingChat);
     } else {
-      // Add new chat
-      const newChat = { email: newEmail, name: newEmail.split("@")[0] }; 
-      setClients([...clients, newChat]);
-      setSelectedClient(newChat);
-      setMessages([]);
+      const newChat = { email: newEmail, name: newEmail.split("@")[0] };
+      setClients(prevClients => {
+        const updatedClients = [...prevClients, newChat];
+        setSelectedClient(newChat);
+        fetchMessages(newChat);
+        return updatedClients;
+      });
     }
 
-    setNewEmail(""); // Clear input field
+    setNewEmail("");
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage(message);
+    }
   };
 
   return (
+    <div>
     <div className={styles.chatWrapper}>
       <Navigation />
-
+      
       <div className={styles.chatContainer}>
-        {/* Left - Chat List */}
         <div className={styles.chatList}>
-          <h2 className={styles.chatTitle}>Chats</h2>
+          <div className={styles.chatListHeader}>
+            <MessageCircle size={24} />
+            <h2>Messages</h2>
+          </div>
 
-          {/* New Chat Input */}
-          <div className={styles.newChat}>
+          <div className={styles.newChatSection}>
             <input
               type="email"
-              placeholder="Enter email..."
+              placeholder="Start new chat (enter email)"
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
               className={styles.newChatInput}
@@ -134,65 +167,130 @@ const Chat = () => {
             </button>
           </div>
 
-          {/* Chat List */}
-          {clients.length > 0 ? (
-            clients.map((client) => (
+          <div className={styles.clientsList}>
+            {clients.map((client) => (
               <div
                 key={client.email}
                 className={`${styles.clientItem} ${
-                  selectedClient?.email === client.email ? styles.clientItemSelected : ''
+                  selectedClient?.email === client.email ? styles.active : ""
                 }`}
                 onClick={() => fetchMessages(client)}
               >
-                {client.name || client.email}
+                <div className={styles.clientAvatar}>
+                  <User size={24} />
+                </div>
+                <div className={styles.clientInfo}>
+                  <span className={styles.clientName}>{client.name}</span>
+                  <span className={styles.clientEmail}>{client.email}</span>
+                </div>
               </div>
-            ))
-          ) : (
-            <p>No clients found</p>
-          )}
+            ))}
+            {clients.length === 0 && (
+              <div className={styles.noClients}>
+                <p>No conversations yet</p>
+                <p>Start a new chat above!</p>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Right - Chat Window */}
         <div className={styles.chatArea}>
           {selectedClient ? (
             <>
-              <h2 className={styles.chatAreaTitle}>
-                Chat with {selectedClient.name || selectedClient.email}
-              </h2>
+              <div className={styles.chatHeader}>
+                <div className={styles.chatHeaderInfo}>
+                  <h2>{selectedClient.name}</h2>
+                  <span>{selectedClient.email}</span>
+                </div>
+              </div>
+
               <div className={styles.messageContainer}>
-                {messages.length > 0 ? (
-                  messages.map((msg, index) => (
-                    <div
-                      key={msg._id || `${msg.sender}-${index}`}
-                      className={`${styles.message} ${
-                        msg.sender === sender ? styles.messageSent : styles.messageReceived
-                      }`}
-                    >
-                      <strong>{msg.sender === sender ? "You" : selectedClient.name}:</strong> {msg.content}
+                {messages.map((msg, index) => (
+                  <div
+                    key={msg._id || `${msg.sender}-${index}`}
+                    className={`${styles.messageItem} ${
+                      msg.sender === sender ? styles.sent : styles.received
+                    }`}
+                  >
+                    {msg.type === "file" ? (
+                      <div className={styles.fileMessage}>
+                        <a
+                          href={`http://localhost:5000${msg.fileUrl || msg.content}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles.fileLink}
+                        >
+                          {msg.fileUrl && (msg.fileUrl.endsWith(".jpg") || msg.fileUrl.endsWith(".jpeg") || msg.fileUrl.endsWith(".png") || msg.fileUrl.endsWith(".gif")) ? (
+                            <img
+                              src={`http://localhost:5000${msg.fileUrl || msg.content}`}
+                              alt="file"
+                              className={styles.imagePreview}
+                            />
+                          ) : (
+                            <div className={styles.fileInfo}>
+                              <Paperclip size={16} />
+                              <span>{msg.fileUrl ? msg.fileUrl.split("/").pop() : msg.content.split("/").pop()}</span>
+                            </div>
+                          )}
+                        </a>
+                      </div>
+                    ) : (
+                      <div className={styles.textMessage}>
+                        {msg.content}
+                      </div>
+                    )}
+                    <div className={styles.messageTime}>
+                      {new Date(msg.timestamp || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </div>
-                  ))
-                ) : (
-                  <p className={styles.noMessages}>No messages yet</p>
+                  </div>
+                ))}
+                {messages.length === 0 && (
+                  <div className={styles.noMessages}>
+                    <p>No messages yet</p>
+                    <p>Start the conversation!</p>
+                  </div>
                 )}
               </div>
-              <div className={styles.messageInput}>
+
+              <div className={styles.inputArea}>
                 <input
                   type="text"
-                  placeholder="Type a message..."
+                  placeholder="Type your message..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className={styles.messageInputField}
+                  onKeyPress={handleKeyPress}
+                  className={styles.messageInput}
                 />
-                <button onClick={sendMessage} className={styles.messageSendButton}>
-                  Send
-                </button>
+                <div className={styles.inputActions}>
+                  <label className={styles.fileInputLabel}>
+                    <Paperclip size={20} />
+                    <input
+                      type="file"
+                      onChange={handleFileUpload}
+                      className={styles.fileInput}
+                    />
+                  </label>
+                  <button
+                    onClick={() => sendMessage(message)}
+                    className={styles.sendButton}
+                    disabled={!message.trim()}
+                  >
+                    <Send size={20} />
+                  </button>
+                </div>
               </div>
             </>
           ) : (
-            <p className={styles.chatInstruction}>Select a chat to start messaging.</p>
+            <div className={styles.welcomeScreen}>
+              <MessageCircle size={48} />
+              <h2>Welcome to Chat</h2>
+              <p>Select a conversation or start a new one</p>
+            </div>
           )}
         </div>
       </div>
+    </div>
+    <Footer/>
     </div>
   );
 };

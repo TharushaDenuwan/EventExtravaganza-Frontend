@@ -46,10 +46,6 @@ export default function Navigation() {
                   <CheckSquare size={16} />
                   <span>Checklist</span>
                 </button>
-                <button className={styles.dropdownItem}>
-                  <MessageCircle size={16} />
-                  <span>Chat Bot</span>
-                </button>
               </div>
             </li>
             
