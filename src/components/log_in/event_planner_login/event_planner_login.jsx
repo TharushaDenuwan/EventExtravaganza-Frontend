@@ -22,6 +22,20 @@ export default function EventPlannerLogin() {
     Budget: '',
     Experience: '',
   });
+
+  const [errors, setErrors] = useState({
+    FullName: '',
+    Email: '',
+    ContactNumber: '',
+    Password: '',
+    ConfirmPassword: '',
+    Address: '',
+    City: '',
+    Gender: '',
+    Budget: '',
+    Experience: '',
+    general: ''
+  });
   
   const [availabilityData, setAvailabilityData] = useState({
     Monday: [],
@@ -32,6 +46,77 @@ export default function EventPlannerLogin() {
     Saturday: [],
     Sunday: []
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Full Name validation
+    if (!formData.FullName.trim()) {
+      newErrors.FullName = 'Full name is required';
+    } else if (formData.FullName.trim().length < 2) {
+      newErrors.FullName = 'Full name must be at least 2 characters long';
+    }
+
+    // Email validation
+    if (!formData.Email.trim()) {
+      newErrors.Email = 'Email is required';
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.Email)) {
+        newErrors.Email = 'Please enter a valid email address';
+      }
+    }
+
+    // Password validation
+    if (!formData.Password) {
+      newErrors.Password = 'Password is required';
+    } else if (formData.Password.length < 8) {
+      newErrors.Password = 'Password must be at least 8 characters long';
+    } else if (!/(?=.*[A-Z])/.test(formData.Password)) {
+      newErrors.Password = 'Password must contain at least one uppercase letter';
+    } else if (!/(?=.*[0-9])/.test(formData.Password)) {
+      newErrors.Password = 'Password must contain at least one number';
+    }
+
+    // Confirm Password validation
+    if (!formData.ConfirmPassword) {
+      newErrors.ConfirmPassword = 'Please confirm your password';
+    } else if (formData.Password !== formData.ConfirmPassword) {
+      newErrors.ConfirmPassword = 'Passwords do not match';
+    }
+
+    // Address validation
+    if (!formData.Address.trim()) {
+      newErrors.Address = 'Address is required';
+    }
+
+    // City validation
+    if (!formData.City.trim()) {
+      newErrors.City = 'City is required';
+    }
+
+    // Gender validation
+    if (!formData.Gender.trim()) {
+      newErrors.Gender = 'Gender is required';
+    }
+
+    // Budget validation
+    if (!formData.Budget) {
+      newErrors.Budget = 'Budget is required';
+    } else if (isNaN(formData.Budget) || Number(formData.Budget) <= 0) {
+      newErrors.Budget = 'Please enter a valid budget amount';
+    }
+
+    // Experience validation
+    if (!formData.Experience.trim()) {
+      newErrors.Experience = 'Experience details are required';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSaveAvailability = (updatedData) => {
     setAvailabilityData(updatedData);
@@ -44,20 +129,30 @@ export default function EventPlannerLogin() {
       ...formData,
       [name]: value,
     });
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: '',
+        general: '',
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.Password !== formData.ConfirmPassword) {
-      alert('Passwords do not match!');
+    if (!validateForm()) {
       return;
     }
+
+    setIsSubmitting(true);
+    setErrors({ ...errors, general: '' });
 
     const dataToSend = {
       FullName: formData.FullName,
       Email: formData.Email,
-      ContactNumber: "0716335703",
+      ContactNumber: formData.ContactNumber,
       Password: formData.Password,
       Address: formData.Address,
       City: formData.City,
@@ -81,9 +176,6 @@ export default function EventPlannerLogin() {
 
       const result = await response.json();
       if (response.ok) {
-        alert('Account created successfully!');
-        console.log(result);
-
         localStorage.setItem('planner', JSON.stringify({
           name: formData.FullName,
           email: formData.Email,
@@ -97,16 +189,23 @@ export default function EventPlannerLogin() {
           budget: formData.Budget,
           experience: formData.Experience,
           Weekly_Availability: availabilityData
-         
         }));
 
         navigate('/Home_PAGE');
       } else {
-        alert(`Error: ${result.message}`);
+        setErrors({
+          ...errors,
+          general: result.message || 'Failed to create account. Please try again.',
+        });
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('An error occurred while submitting the form.');
+      setErrors({
+        ...errors,
+        general: 'Network error. Please check your connection and try again.',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -122,86 +221,90 @@ export default function EventPlannerLogin() {
   return (
     <div className={styles.main}>
       <div className={styles.container}>
-        <form className={styles.container2} onSubmit={handleSubmit}>
+        <form className={styles.container2} onSubmit={handleSubmit} noValidate>
           <div className={styles.box1}>
             <h1 className={styles.h1}>Create Event Planner Account</h1>
             <p className={styles.p1}>Provide correct information to setup your account</p>
 
+            {errors.general && (
+              <div className={styles.errorText}>{errors.general}</div>
+            )}
+
             <label className={styles.l1} htmlFor="FullName">Full Name</label> <br />
             <input
-              className={styles.i1}
+              className={`${styles.i1} ${errors.FullName ? styles.inputError : ''}`}
               type="text"
               name="FullName"
               placeholder="Enter your name"
               value={formData.FullName}
               onChange={handleInputChange}
-              required
             />
+            {errors.FullName && <div className={styles.errorText}>{errors.FullName}</div>}
 
             <br /> <br />
 
             <label className={styles.l1} htmlFor="Email">Email</label> <br />
             <input
-              className={styles.i1}
+              className={`${styles.i1} ${errors.Email ? styles.inputError : ''}`}
               type="email"
               name="Email"
               placeholder="Enter your email"
               value={formData.Email}
               onChange={handleInputChange}
-              required
             />
+            {errors.Email && <div className={styles.errorText}>{errors.Email}</div>}
 
             <br /> <br />
 
             <label className={styles.l1} htmlFor="Password">Create Password</label> <br />
             <input
-              className={styles.i1}
+              className={`${styles.i1} ${errors.Password ? styles.inputError : ''}`}
               type="password"
               name="Password"
               placeholder="Enter a password"
               value={formData.Password}
               onChange={handleInputChange}
-              required
             />
+            {errors.Password && <div className={styles.errorText}>{errors.Password}</div>}
 
             <br /> <br />
 
             <label className={styles.l1} htmlFor="ConfirmPassword">Confirm Password</label> <br />
             <input
-              className={styles.i1}
+              className={`${styles.i1} ${errors.ConfirmPassword ? styles.inputError : ''}`}
               type="password"
               name="ConfirmPassword"
               placeholder="Enter password again"
               value={formData.ConfirmPassword}
               onChange={handleInputChange}
-              required
             />
+            {errors.ConfirmPassword && <div className={styles.errorText}>{errors.ConfirmPassword}</div>}
 
             <br /> <br />
 
             <label className={styles.l1} htmlFor="Address">Address</label> <br />
             <input
-              className={styles.i1}
+              className={`${styles.i1} ${errors.Address ? styles.inputError : ''}`}
               type="text"
               name="Address"
               placeholder="Enter address"
               value={formData.Address}
               onChange={handleInputChange}
-              required
             />
+            {errors.Address && <div className={styles.errorText}>{errors.Address}</div>}
 
             <br /> <br />
 
             <label className={styles.l1} htmlFor="City">City</label> <br />
             <input
-              className={styles.i1}
+              className={`${styles.i1} ${errors.City ? styles.inputError : ''}`}
               type="text"
               name="City"
               placeholder="Enter city"
               value={formData.City}
               onChange={handleInputChange}
-              required
             />
+            {errors.City && <div className={styles.errorText}>{errors.City}</div>}
 
             <div className={styles.l1}>
               <h1>Select your location</h1>
@@ -220,14 +323,14 @@ export default function EventPlannerLogin() {
           <div className={styles.box2}>
             <label className={styles.l1} htmlFor="Gender">Gender</label> <br />
             <input
-              className={styles.i1}
+              className={`${styles.i1} ${errors.Gender ? styles.inputError : ''}`}
               type="text"
               name="Gender"
               placeholder="Enter your gender"
               value={formData.Gender}
               onChange={handleInputChange}
-              required
             />
+            {errors.Gender && <div className={styles.errorText}>{errors.Gender}</div>}
 
             <br /> <br />
 
@@ -237,7 +340,6 @@ export default function EventPlannerLogin() {
               name="Speciality"
               value={formData.Speciality}
               onChange={handleInputChange}
-              required
             >
               <option value="Weddings">Weddings</option>
               <option value="Parties">Parties</option>
@@ -248,30 +350,36 @@ export default function EventPlannerLogin() {
 
             <label className={styles.l1} htmlFor="Budget">Highest Budget Value</label> <br />
             <input
-              className={styles.i1}
+              className={`${styles.i1} ${errors.Budget ? styles.inputError : ''}`}
               type="number"
               name="Budget"
               placeholder="Enter your highest budget value"
               value={formData.Budget}
               onChange={handleInputChange}
-              required
             />
+            {errors.Budget && <div className={styles.errorText}>{errors.Budget}</div>}
 
             <br /> <br />
 
             <label className={styles.l1} htmlFor="Experience">Your Experience</label> <br />
             <textarea
-              className={styles.textarea}
+              className={`${styles.textarea} ${errors.Experience ? styles.inputError : ''}`}
               name="Experience"
               placeholder="Enter your experience"
               value={formData.Experience}
               onChange={handleInputChange}
-              required
             />
+            {errors.Experience && <div className={styles.errorText}>{errors.Experience}</div>}
 
             <br />
 
-            <button className={styles.b1} type="submit">Sign up</button>
+            <button 
+              className={styles.b1} 
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Creating Account...' : 'Sign up'}
+            </button>
             <p className={styles.p2}>
               Already have an account? <span onClick={() => navigate('/planner_signin')} className={styles.span}>Login</span>
             </p>

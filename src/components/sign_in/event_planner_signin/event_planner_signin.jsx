@@ -1,24 +1,49 @@
 import React, { useState } from "react";
 import styles from "./event_planner_signin.module.css";
 import { useNavigate } from "react-router-dom";
+import { AlertCircle } from 'lucide-react';
 
 export default function EventPlannerSignin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+
+  const validateForm = () => {
+    let isValid = true;
+    const newFieldErrors = { email: "", password: "" };
+
+    // Email validation
+    if (!email) {
+      newFieldErrors.email = "Email is required";
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newFieldErrors.email = "Please enter a valid email address";
+      isValid = false;
+    }
+
+    // Password validation
+    if (!password) {
+      newFieldErrors.password = "Password is required";
+      isValid = false;
+    }
+
+    setFieldErrors(newFieldErrors);
+    return isValid;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
     setError("");
+    setFieldErrors({ email: "", password: "" });
 
-    if (!email || !password) {
-      setError("Please enter both email and password.");
-      setIsLoading(false);
+    if (!validateForm()) {
       return;
     }
+
+    setIsLoading(true);
 
     try {
       // Step 1: Authenticate the user
@@ -31,9 +56,7 @@ export default function EventPlannerSignin() {
       const loginData = await loginResponse.json();
 
       if (!loginResponse.ok) {
-        setError("Invalid email or password. Please try again.");
-        setIsLoading(false);
-        return;
+        throw new Error(loginData.message || "Invalid email or password");
       }
 
       // Step 2: Fetch planner details using the email
@@ -43,13 +66,11 @@ export default function EventPlannerSignin() {
         body: JSON.stringify({ email }),
       });
 
-      const plannerData = await plannerResponse.json();
-
       if (!plannerResponse.ok) {
-        setError("Failed to fetch planner details. Please try again.");
-        setIsLoading(false);
-        return;
+        throw new Error("Failed to fetch planner details");
       }
+
+      const plannerData = await plannerResponse.json();
 
       // Step 3: Store planner details in local storage
       localStorage.setItem('planner', JSON.stringify({
@@ -68,7 +89,12 @@ export default function EventPlannerSignin() {
       // Step 4: Redirect to the profile page
       navigate("/Home_PAGE");
     } catch (error) {
-      setError("An error occurred. Please check your connection and try again.");
+      if (error.message === "Failed to fetch") {
+        setError("Unable to connect to the server. Please check your internet connection.");
+      } else {
+        setError(error.message || "An unexpected error occurred. Please try again.");
+      }
+    } finally {
       setIsLoading(false);
     }
   };
@@ -81,51 +107,72 @@ export default function EventPlannerSignin() {
           <p className={styles.p1}>Sign in to continue planning amazing events</p>
         </div>
 
-        {error && <div className={styles.error}>{error}</div>}
+        {error && (
+          <div className={styles.error}>
+            <AlertCircle className={styles.errorIcon} />
+            <span>{error}</span>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.inputGroup}>
             <label className={styles.l1} htmlFor="email">Email Address</label>
             <input
-              className={styles.i1}
+              className={`${styles.i1} ${fieldErrors.email ? styles.inputError : ''}`}
               type="email"
               id="email"
               name="email"
               placeholder="Enter your email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setFieldErrors(prev => ({ ...prev, email: "" }));
+              }}
               disabled={isLoading}
             />
+            {fieldErrors.email && (
+              <span className={styles.fieldError}>{fieldErrors.email}</span>
+            )}
           </div>
 
           <div className={styles.inputGroup}>
             <label className={styles.l1} htmlFor="password">Password</label>
             <input
-              className={styles.i1}
+              className={`${styles.i1} ${fieldErrors.password ? styles.inputError : ''}`}
               type="password"
               id="password"
               name="password"
               placeholder="Enter your password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setFieldErrors(prev => ({ ...prev, password: "" }));
+              }}
               disabled={isLoading}
             />
+            {fieldErrors.password && (
+              <span className={styles.fieldError}>{fieldErrors.password}</span>
+            )}
           </div>
 
           <button 
-            className={`${styles.b1} ${isLoading ? styles.loading : ''}`} 
+            className={`${styles.b1} ${isLoading ? styles.loading : ''} relative`}
             type="submit"
             disabled={isLoading}
           >
-            {isLoading ? 'Signing in...' : 'Sign in'}
+            <span className={isLoading ? 'opacity-0' : ''}>Sign in</span>
+            {isLoading && (
+              <div className={styles.spinner}></div>
+            )}
           </button>
         </form>
 
         <p className={styles.p2}>
-          Don't have an account?
-          <span className={styles.span} onClick={() => navigate("/planner_login")}>
+          Don't have an account?{' '}
+          <span 
+            className={styles.span}
+            onClick={() => navigate("/planner_login")}
+          >
             Sign up
           </span>
         </p>

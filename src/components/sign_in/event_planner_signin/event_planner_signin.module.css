@@ -198,3 +198,37 @@
       padding: 0.8rem;
     }
   }
+
+  .inputError {
+    border: 2px solid #ef4444;
+  }
+  
+  .inputError:focus {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  }
+  
+  .fieldError {
+    color: #dc2626;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  .error {
+    margin-bottom: 1.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background-color: #fee2e2;
+    border: 2px solid #ef4444;
+    color: #dc2626;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .errorIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+  }
