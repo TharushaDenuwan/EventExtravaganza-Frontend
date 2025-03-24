@@ -63,7 +63,7 @@ export default function Chatbot() {
         <div className={styles.chatHeader}>
           <h1 className={styles.chatTitle}>AI Assistant</h1>
           <p className={styles.chatSubtitle}>
-            Ask me anything! I'm here to help you with your questions.
+            Ask me anything! I&apos;m here to help you with your questions.
           </p>
         </div>
 
