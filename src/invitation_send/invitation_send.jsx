@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import html2canvas from 'html2canvas';
 import emailjs from 'emailjs-com';
 import Navigation from '../components/navigation/navigation';
@@ -71,7 +71,7 @@ export default function EventInvitation() {
 
   const validateForm = () => {
     const emptyFields = Object.entries(eventDetails)
-      .filter(([key, value]) => !value)
+      .filter(([, value]) => !value)
       .map(([key]) => key);
 
     if (emptyFields.length > 0) {
