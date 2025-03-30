@@ -1,0 +1,268 @@
+/* Base Template Styles */
+.template1, .template2, .template3 {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+  }
+  
+  .templateInner {
+    position: relative;
+    padding: 2.5rem;
+    text-align: center;
+  }
+  
+  /* Template 1 - Royal Elegance */
+  .template1 {
+    background: linear-gradient(135deg, #f6e6e8 0%, #f9f1f2 100%);
+    border: 1px solid #e8d1d6;
+  }
+  
+  .template1 .decorativeHeader,
+  .template1 .decorativeFooter {
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #c86b85, transparent);
+    margin: 1.5rem 0;
+    position: relative;
+  }
+  
+  .template1 .decorativeHeader::before,
+  .template1 .decorativeFooter::before {
+    content: '❦';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #c86b85;
+    background: #f9f1f2;
+    padding: 0 1rem;
+    font-size: 1.2rem;
+  }
+  
+  .template1 .title {
+    font-family: 'Playfair Display', serif;
+    color: #9b4b65;
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+    font-weight: 700;
+  }
+  
+  .template1 .eventName {
+    color: #c86b85;
+  }
+  
+  .template1 .label {
+    color: #9b4b65;
+  }
+  
+  .template1 .value {
+    color: #c86b85;
+  }
+  
+  .template1 .footer {
+    color: #9b4b65;
+    font-family: 'Playfair Display', serif;
+  }
+  
+  /* Template 2 - Modern Luxury */
+  .template2 {
+    background: #2c3e50;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .template2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(41, 128, 185, 0.1), rgba(44, 62, 80, 0.2));
+    z-index: 1;
+  }
+  
+  .template2 .templateInner {
+    position: relative;
+    z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(44, 62, 80, 0.3);
+    backdrop-filter: blur(10px);
+  }
+  
+  .template2 .circle {
+    width: 120px;
+    height: 120px;
+    border: 2px solid #3498db;
+    border-radius: 50%;
+    margin: 0 auto 2rem;
+    position: relative;
+    background: rgba(52, 152, 219, 0.1);
+    box-shadow: 0 0 20px rgba(52, 152, 219, 0.2);
+  }
+  
+  .template2 .circle::before,
+  .template2 .circle::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(52, 152, 219, 0.3);
+  }
+  
+  .template2 .circle::before {
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+  }
+  
+  .template2 .circle::after {
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+  }
+  
+  .template2 .title {
+    color: #3498db;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+  }
+  
+  .template2 .eventName {
+    color: #fff;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+  
+  .template2 .label {
+    color: #3498db;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+  }
+  
+  .template2 .value {
+    color: #fff;
+    font-weight: 300;
+  }
+  
+  .template2 .footer {
+    color: rgba(255, 255, 255, 0.8);
+    font-style: normal;
+    letter-spacing: 1px;
+  }
+  
+  /* Template 3 - Nature Inspired */
+  .template3 {
+    background: #f4f8f3;
+    position: relative;
+  }
+  
+  .template3 .border {
+    border: 2px solid #557c55;
+    padding: 2.5rem;
+    position: relative;
+    background: rgba(255, 255, 255, 0.8);
+  }
+  
+  .template3 .border::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    right: -12px;
+    bottom: -12px;
+    border: 1px solid #557c55;
+    z-index: -1;
+  }
+  
+  .template3 .border::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border: 1px solid #557c55;
+    z-index: -1;
+  }
+  
+  .template3 .title {
+    color: #557c55;
+    font-size: 2.6rem;
+    font-family: 'Cormorant Garamond', serif;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  
+  .template3 .title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: #557c55;
+  }
+  
+  .template3 .eventName {
+    color: #557c55;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  
+  .template3 .label {
+    color: #557c55;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  
+  .template3 .value {
+    color: #2c3e50;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+  }
+  
+  .template3 .footer {
+    color: #557c55;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    margin-top: 2.5rem;
+  }
+  
+  /* Common Detail Styles */
+  .details {
+    margin: 2.5rem 0;
+  }
+  
+  .detailItem {
+    margin: 1.5rem 0;
+  }
+  
+  .label {
+    display: block;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .value {
+    font-size: 1.3rem;
+    line-height: 1.6;
+  }
+  
+  .footer {
+    font-style: italic;
+    margin-top: 2.5rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }

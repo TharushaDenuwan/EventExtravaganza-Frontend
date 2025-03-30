@@ -1,0 +1,100 @@
+.profileContainer {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 80px 1rem 0 1rem;
+  }
+  
+  .profileHeader {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .profileImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .imagePlaceholder {
+    width: 100%;
+    height: 100%;
+    background-color: #551488;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+  }
+  
+  .name {
+    font-size: 2.5rem;
+    color: #333;
+  }
+  
+  .infoSection {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .infoGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .infoItem {
+    margin-bottom: 0.5rem;
+  }
+  
+  .infoItem label {
+    display: block;
+    color: #666;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  .infoItem p {
+    color: #333;
+    font-size: 1.1rem;
+  }
+  
+  .b1{
+    width: 150px;
+    height: 50px;
+    background-color: #0073e5;
+    color: white;
+    border-radius: 30px;
+    border: none;
+    margin-top: 50px;
+    font-size: 17px;
+    cursor: pointer;
+    transition: background-color 0.5s, color 0.3s;
+  
+  }
+  
+  .b1:hover{
+    background-color: blue;
+  }
+  
+  @media (max-width: 768px) {
+    .profileHeader {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .infoGrid {
+      grid-template-columns: 1fr;
+    }
+    
+    .infoSection {
+      padding: 1rem;
+    }
+  
+  
+  }

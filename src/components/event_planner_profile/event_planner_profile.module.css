@@ -1,0 +1,423 @@
+/* .profileContainer {
+  padding: 2rem;
+  max-width: 1500px;
+  margin: 0 auto;
+  position: relative;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  background-image: 
+      linear-gradient(rgba(35, 3, 59, 0.1), rgba(85, 20, 136, 0.1)),
+      repeating-linear-gradient(45deg, 
+          rgba(85, 20, 136, 0.05) 0px, 
+          rgba(85, 20, 136, 0.05) 2px,
+          transparent 4px, 
+          transparent 10px
+      );
+} */
+.profileCard {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.profileHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.profileImageContainer {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 4px solid #551488;
+  text-align: center;
+}
+
+.profileImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profileName {
+  font-size: 2rem;
+  color: #333;
+  margin: 0;
+}
+
+.ratingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.stars {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.starFilled {
+  fill: #FFD700;
+  stroke: #FFD700;
+}
+
+.starEmpty {
+  fill: none;
+  stroke: #FFD700;
+}
+
+.ratingText {
+  color: #666;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.checklistButton {
+  background-color: #29084e;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  margin-top: 1rem;
+  transition: background-color 0.2s;
+  display: inline-block;
+  font-weight: 500;
+}
+
+.checklistButton:hover {
+  background-color: #3f0f66;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.infoSection {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.infoSection h2 {
+  color: #551488;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.infoItem {
+  padding: 0.5rem;
+}
+
+.infoItem label {
+  font-weight: bold;
+  color: #666;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.infoItem p {
+  margin: 0;
+  color: #333;
+}
+
+.reviewsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.reviewCard {
+  background-color: white;
+  border: 1px solid #eee;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.reviewerName {
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.reviewStars {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.reviewComment {
+  color: #666;
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+.reviewDate {
+  display: block;
+  color: #999;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.b1{
+  width: 150px;
+  height: 50px;
+  background-color: #0073e5;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  margin-top: 50px;
+  font-size: 17px;
+  cursor: pointer;
+  transition: background-color 0.5s, color 0.3s;
+
+}
+
+.b1:hover{
+  background-color: blue;
+}
+
+/* Checklist Section */
+.checklistSection {
+  background-color: #f8f9fa;
+  margin-top: 40px;
+  padding: 20px;
+  border-top: 2px solid #f0f0f0;
+}
+
+.checklistSection h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #551488;
+  margin-bottom: 20px;
+}
+
+.checklistSection p {
+  font-size: 16px;
+  color: #777;
+  margin: 10px 0;
+}
+
+/* Loading message */
+.checklistSection p {
+  font-style: italic;
+}
+
+/* Checklist list */
+.checklistSection ul {
+  list-style: none;
+  padding: 0;
+}
+
+.checklistItem {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border: 1px solid #ddd;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.checklistItem:hover {
+  border: 2px solid #29084e;
+  transform: translateY(-5px);
+}
+
+/* Checklist Title */
+.checklistItem h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: black;
+  margin-bottom: 10px;
+}
+
+/* Checklist created date */
+.checklistItem p {
+  font-size: 14px;
+  color: black;
+}
+
+/* View Checklist Button */
+.viewChecklistButton {
+  font-size: 14px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 10px;
+  display: inline-block;
+  padding: 8px 15px;
+  background-color: #29084e;
+  border: 2px solid #e5f4ff;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.viewChecklistButton:hover {
+  background-color: #e5f4ff;
+  color: #29084e;
+  border: 2px solid #29084e;
+}
+
+.viewChecklistButton:active {
+  border: 2px solid #29084e;
+}
+
+/* Popup Overlay */
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); 
+  backdrop-filter: blur(2px); /* Blurred background effect */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup Content */
+.popupContent {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Checklist Name */
+.popupContent h2 {
+  color: #00415a;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+/* Organizer Name */
+.popupContent p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Task Details */
+.popupContent h3 {
+  color: #00719c;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* Task List */
+.popupContent ul {
+  list-style-type: none;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.popupContent ul li {
+  background: #f0f8ff;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #001f2b;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Close Button */
+.popupContent button {
+  background: #009bd6;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: 0.3s;
+}
+
+.popupContent button:hover {
+  background: #00719c;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .profileContainer {
+      padding: 1rem;
+  }
+
+  .profileCard {
+      padding: 1rem;
+  }
+
+  .infoGrid {
+      grid-template-columns: 1fr;
+  }
+
+  .reviewHeader {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+  }
+
+  .popupContent {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .popupContent h2 {
+    font-size: 20px;
+  }
+
+  .popupContent p {
+    font-size: 14px;
+  }
+
+  .popupContent ul li {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .popupContent button {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+}

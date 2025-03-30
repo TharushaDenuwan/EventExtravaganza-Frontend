@@ -1,3 +1,4 @@
+
 //This is the frontend file created for the Chatbot
 //Created by Sanuka Dabare
 
@@ -6,11 +7,13 @@ import {useState,useRef,useEffect} from 'react';
 import axios from 'axios';//importing axios for managing HTTP requests
 
 //importing neccessary css files for styling purposes
+
 import './chatbot.css'
 import '../components/navigation/navigation'
 import '../components/navigation/navigation.module.css'
 import '../components/footer/footer'
 import '../components/footer/footer.module.css'
+
 
 const OPENAI_BASE_URL= "http://localhost:5001";//setting the base URL for managing API requests
 
@@ -35,10 +38,12 @@ export default function Chatbot() {
   const sendMessage=async () => {
     if(!input.trim()) return;//This prevents user from sending empty messages
 
+
     const userMessage={role: 'user',content: input};
     setMessages(prevMessages=> [...prevMessages,userMessage]);
 
     setInput('');
+
     setLoading(true);//Shows the loading indicator to the user
     setError(null);
 
@@ -79,7 +84,9 @@ export default function Chatbot() {
         {error && <p className="error">{error}</p>}
         
       </div>
+
       {/* Input field for user to send messages and the send button */}
+
       <div className="input-container">
         <input
           type="text"
@@ -92,5 +99,8 @@ export default function Chatbot() {
       </div>
     </div>
   );
+
+
 };
+
 

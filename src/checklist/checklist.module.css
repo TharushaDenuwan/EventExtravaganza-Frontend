@@ -1,0 +1,352 @@
+/* Container and Layout */
+.container {
+    background-color: #ffffff;
+    min-height: 100vh;
+    color: #353535;
+  }
+  
+  .h3 {
+    font-size: 2.5rem;
+    color: #284b63;
+    margin: 2rem 0;
+    padding-left: 2rem;
+  }
+  
+  .green-pipe {
+    color: #3c6e71;
+    font-weight: bold;
+    margin-right: 1rem;
+  }
+  
+  .p1 {
+    font-size: 2rem;
+    color: #353535;
+    margin: 2rem;
+    line-height: 1.5;
+  }
+  
+  .p2 {
+    font-size: 1.1rem;
+    color: #284b63;
+    margin: 2rem;
+    line-height: 1.8;
+  }
+  
+  .box-text {
+    background-color: #3c6e71;
+    color: #ffffff;
+    padding: 0.3rem 1rem;
+    border-radius: 4px;
+  }
+  
+  /* Hero Section */
+  .heroSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem;
+    margin: 2rem 0;
+    background: linear-gradient(to right, rgba(40, 75, 99, 0.05), rgba(60, 110, 113, 0.05));
+    border-radius: 12px;
+  }
+  
+  .heroContent {
+    flex: 1;
+    padding-right: 2rem;
+  }
+  
+  .heroImage {
+    flex: 1;
+    max-width: 500px;
+    height: 300px;
+    background-image: url('https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Features Section */
+  .featuresGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+    margin: 2rem 0;
+  }
+  
+  .featureCard {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+  }
+  
+  .featureCard:hover {
+    transform: translateY(-5px);
+  }
+  
+  .featureIcon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 1rem;
+    object-fit: contain;
+  }
+  
+  .featureTitle {
+    color: #284b63;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .featureDescription {
+    color: #353535;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  
+  /* Buttons */
+  .button1 {
+    background-color: #284b63;
+    color: #ffffff;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .button1:hover {
+    background-color: #3c6e71;
+    transform: translateY(-2px);
+  }
+  
+  .button2 {
+    background-color: #3c6e71;
+    color: #ffffff;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0.5rem;
+  }
+  
+  .button2:hover {
+    background-color: #284b63;
+  }
+  
+  /* Popup Styles */
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .popup-content {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  }
+  
+  .close-btn {
+    position: absolute;
+    right: 1.5rem;
+    top: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #353535;
+    transition: color 0.3s ease;
+  }
+  
+  .close-btn:hover {
+    color: #284b63;
+  }
+  
+  /* Form Styles */
+  .formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .input1, .select {
+    padding: 0.8rem;
+    border: 2px solid #d9d9d9;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  .input1:focus, .select:focus {
+    border-color: #3c6e71;
+    outline: none;
+  }
+  
+  /* Preview Section */
+  .previewSection {
+    margin-top: 2rem;
+    overflow-x: auto;
+  }
+  
+  .previewSection table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  
+  .previewSection th {
+    background-color: #284b63;
+    color: #ffffff;
+    padding: 1rem;
+    text-align: left;
+  }
+  
+  .previewSection td {
+    padding: 1rem;
+    border-bottom: 1px solid #d9d9d9;
+  }
+  
+  .previewSection tr:hover {
+    background-color: rgba(40, 75, 99, 0.05);
+  }
+  
+  /* Option Buttons */
+  .optionButton {
+    background-color: #3c6e71;
+    color: #ffffff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 0.3rem;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .optionButton:hover {
+    background-color: #284b63;
+  }
+  
+  /* Create Button */
+  .createButton {
+    background-color: #284b63;
+    color: #ffffff;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 2rem;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+  
+  .createButton:hover:not(:disabled) {
+    background-color: #3c6e71;
+  }
+  
+  .createButton:disabled {
+    background-color: #d9d9d9;
+    cursor: not-allowed;
+  }
+  
+  /* Messages */
+  .success-message {
+    color: #3c6e71;
+    text-align: center;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background-color: rgba(60, 110, 113, 0.1);
+  }
+  
+  /* Preview Data */
+  .preview {
+    color: #284b63;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .previewData {
+    color: #353535;
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+  }
+  
+  /* Button Group */
+  .buttonGroup {
+    grid-column: span 2;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .formGrid {
+      grid-template-columns: 1fr;
+    }
+  
+    .buttonGroup {
+      grid-column: span 1;
+    }
+  
+    .popup-content {
+      width: 95%;
+      padding: 1rem;
+    }
+  
+    .h3 {
+      font-size: 2rem;
+    }
+  
+    .p1 {
+      font-size: 1.5rem;
+    }
+  
+    .heroSection {
+      flex-direction: column;
+      padding: 1rem;
+    }
+  
+    .heroContent {
+      padding-right: 0;
+      padding-bottom: 1rem;
+    }
+  
+    .heroImage {
+      width: 100%;
+      height: 200px;
+    }
+  
+    .featuresGrid {
+      grid-template-columns: 1fr;
+    }
+  }

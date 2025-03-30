@@ -1,0 +1,206 @@
+.page {
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.hero {
+  text-align: center;
+  padding: 3rem 0;
+  margin-bottom: 2rem;
+}
+
+.hero h1 {
+  color: #284b63;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  color: #353535;
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.packagesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.packageCard {
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.packageCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.packageCard.popular {
+  border: 2px solid #3c6e71;
+  transform: scale(1.02);
+}
+
+.packageCard.selected {
+  border-color: #3c6e71;
+  box-shadow: 0 0 0 2px #3c6e71;
+}
+
+.popularBadge {
+  position: absolute;
+  top: -12px;
+  right: 24px;
+  background: #3c6e71;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.packageHeader {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.packageIcon {
+  color: var(--package-color, #3c6e71);
+  margin-bottom: 1rem;
+}
+
+.packageHeader h2 {
+  color: #284b63;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.price {
+  font-size: 2.5rem;
+  color: #284b63;
+  font-weight: 700;
+}
+
+.period {
+  font-size: 1rem;
+  color: #353535;
+  font-weight: normal;
+}
+
+.features {
+  margin: 2rem 0;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  color: #353535;
+}
+
+.featureIcon {
+  color: #3c6e71;
+  flex-shrink: 0;
+}
+
+.selectButton {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #3c6e71;
+  border-radius: 8px;
+  background: transparent;
+  color: #3c6e71;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.selectButton:hover {
+  background: #3c6e71;
+  color: white;
+}
+
+.selectButton.selected {
+  background: #3c6e71;
+  color: white;
+}
+
+.callToAction {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.purchaseButton {
+  background: #284b63;
+  color: white;
+  border: none;
+  padding: 1rem 3rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.purchaseButton:hover {
+  background: #3c6e71;
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .packagesGrid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .packageCard {
+    padding: 1.5rem;
+  }
+
+  .price {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 1rem;
+  }
+
+  .hero {
+    padding: 2rem 0;
+  }
+
+  .packagesGrid {
+    grid-template-columns: 1fr;
+  }
+}
